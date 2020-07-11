@@ -29,6 +29,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\ListingPriceField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToManyAssociationField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToOneAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ParentAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ParentFkField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\PasswordField;
@@ -225,11 +226,11 @@ EOL;
     {
         $fields = $definition->getFields()->filter(
             function (Field $field) {
-                if (!$field instanceof ManyToOneAssociationField) {
-                    return false;
-                }
-
-                return true;
+                return (
+                    $field instanceof ManyToOneAssociationField 
+                    || $field instanceof OneToOneAssociationField
+                    || $field instanceof OneToManyAssociationField
+                );
             }
         );
 
